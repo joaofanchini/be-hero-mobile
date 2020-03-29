@@ -38,5 +38,6 @@ PS: The concepts of components, state, immutabilty has the same too
   - expo install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view
   - npm install @react-navigation/stack (nagigations by the buttons)
 - expo install expo-constants
+- expo email-composer (abre tela para escrever email)
 
 PS: The expo already have the icons package, very similar of react-icons on the project.

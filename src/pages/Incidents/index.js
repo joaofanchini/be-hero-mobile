@@ -43,7 +43,7 @@ export default function Incident() {
   const navigation = useNavigation();
 
   function toDetails() {
-    navigation.navigate('Details'); // Same name defined on the routes
+    // Same name defined on the routes
   }
 
   return (
@@ -64,6 +64,7 @@ export default function Incident() {
         data={[1, 2, 3]}
         style={styles.incidentsList}
         keyExtractor={incident => String(incident)}
+        showsVerticalScrollIndicator={false}
         renderItem={() => (
           <View style={styles.incident}>
             <Text style={styles.incidentProperty}>ONG:</Text>
@@ -74,7 +75,12 @@ export default function Incident() {
 
             <Text style={styles.incidentProperty}>VALOR:</Text>
             <Text style={styles.incidentProperty}>R$ 120,00</Text>
-            <TouchableOpacity style={styles.detailsButton} onPress={toDetails}>
+            <TouchableOpacity
+              style={styles.detailsButton}
+              onPress={() => {
+                navigation.navigate('Details');
+              }}
+            >
               <Text style={styles.detailsButtonText}>Ver mais detalhes</Text>
               <Feather name='arrow-right' size={23} color='#E02041'></Feather>
             </TouchableOpacity>
