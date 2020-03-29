@@ -41,3 +41,5 @@ PS: The concepts of components, state, immutabilty has the same too
 - expo email-composer (abre tela para escrever email)
 
 PS: The expo already have the icons package, very similar of react-icons on the project.
+
+PS: To link any app from cellphone, is made by DeepLink (Every app have this) - This a url of the app

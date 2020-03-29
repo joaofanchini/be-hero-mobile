@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, View, Image, TouchableOpacity } from 'react-native';
+// Linking é utilizado para fazer deepLink no celular (chamar url de app)
+import { Text, View, Image, TouchableOpacity, Linking } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import * as MailComposer from 'expo-mail-composer';
@@ -51,7 +52,14 @@ export default function Details() {
         <Text style={styles.heroTitle}>Seja o heroi desse caso.</Text>
         <Text style={styles.heroDescription}>Entre em contato:</Text>
         <View style={styles.actions}>
-          <TouchableOpacity style={styles.action} onPress={() => {}}>
+          <TouchableOpacity
+            style={styles.action}
+            onPress={() => {
+              Linking.openURL(
+                `whatsapp://send?phone=5511981008626&text=${message}`
+              );
+            }}
+          >
             <Text style={styles.actionText}>Whatsapp</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.action} onPress={sendEmail}>
