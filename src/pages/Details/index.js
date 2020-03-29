@@ -12,8 +12,8 @@ import logo from '../../../assets/logo.png'; // Já importa no melhor formato
 
 export default function Details() {
   const navigation = useNavigation();
-  function toOther() {
-    navigation.navigate('');
+  function toBack() {
+    navigation.goBack();
   }
   return (
     <View style={styles.container}>
