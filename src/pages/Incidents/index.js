@@ -36,7 +36,9 @@ import api from '../../services/service';
  *  renderItem => O que será renderizado por cada elemento da lista (lembrando que quando
  *  passamos entre parenteses, estamos retornando um JSX.) que recebe uma função que retorna
  *  JSX. Na função ela retorna um objeto, onde o dado esta dentro de variável como 'item', para utiliza-lo, pode renomea-lo
- *
+ *  onEndReached => Passa uma função que será executada automaticamente quando o usuário chegar no final da lista
+ *  onEntReachedThreshold=> Passa uma porcentagem (entre 0 e 1) que indica quanto da lista o usuário precisa visualizar para atualizar a lista (chamar a função onEndReached)
+ * para ele ir carregando dados enquanto o usuário dá o scroll
  *
  *
  *
@@ -47,12 +49,19 @@ export default function Incident() {
   const navigation = useNavigation();
   const [incidents, setIncidents] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
+  const [page, setPage] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   async function loadIncidents() {
-    //let response = await api.get('incident');
+    if (loading) return;
+    if (totalCount > 0 && incidents == 0) return;
+    setLoading(true);
+    //let response = await api.get(`incident`,{
+    //  params: {page}
+    //});
     //let header = response.headers['x-total-count'];
     //setTotalCount(header);
-    //setIncidents(response.data);
+    //setIncidents([...incidents,...response.data]); // forma de ligar dois vetores
     setIncidents([
       {
         id: 3,
@@ -67,6 +76,8 @@ export default function Incident() {
       }
     ]);
     setTotalCount(1);
+    setPage(page + 1);
+    setLoading(false);
   }
 
   function toDetails(incident) {
@@ -97,6 +108,8 @@ export default function Incident() {
         style={styles.incidentsList}
         keyExtractor={incident => String(incident.id)}
         showsVerticalScrollIndicator={false}
+        onEndReached={loadIncidents} // método que carrega mais elementos
+        onEndReachedThreshold={0.2} // Quando faltar 20 da lista, começa a rodar o método que carrega mais elementos
         renderItem={(
           { item: incident } // Renomeando propriedade descontruída para incidente
         ) => (
