@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react'; // USeEffect -> Sempre para carregar algo
 
 import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native';
 import logo from '../../../assets/logo.png'; // Já importa no melhor formato
@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { Feather } from '@expo/vector-icons';
 
+import api from '../../services/service';
 /**
  * Temos diferentes imagens de logos pois dentro do mobile temos densidades de pixels diferentes,
  * o que faz com que ao descrevermos '@2x' faz com que ele ja identifica as diferentes
@@ -34,24 +35,55 @@ import { Feather } from '@expo/vector-icons';
  *  style => Função de estilo
  *  renderItem => O que será renderizado por cada elemento da lista (lembrando que quando
  *  passamos entre parenteses, estamos retornando um JSX.) que recebe uma função que retorna
- * JSX.
+ *  JSX. Na função ela retorna um objeto, onde o dado esta dentro de variável como 'item', para utiliza-lo, pode renomea-lo
+ *
+ *
+ *
  *
  *  Passando a propriedade showsVerticalScrollIndicator conseguimos retirar a barra ao lado de scroll
  */
 
 export default function Incident() {
   const navigation = useNavigation();
+  const [incidents, setIncidents] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
 
-  function toDetails() {
-    // Same name defined on the routes
+  async function loadIncidents() {
+    //let response = await api.get('incident');
+    //let header = response.headers['x-total-count'];
+    //setTotalCount(header);
+    //setIncidents(response.data);
+    setIncidents([
+      {
+        id: 3,
+        title: 'Ajuda de custo',
+        value: 12,
+        ong_id: '2394dd76',
+        description: 'Lorem ipsulum',
+        name: 'Atados',
+        email: 'contato@email.com.br',
+        whatsapp: '11111111111',
+        uf: 'SP'
+      }
+    ]);
+    setTotalCount(1);
   }
+
+  function toDetails(incident) {
+    navigation.navigate('Details', { incident }); // Same name defined on the routes
+  }
+
+  useEffect(() => {
+    loadIncidents();
+  }, []);
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Image source={logo}></Image>
         <Text style={styles.headerText}>
-          Total de <Text style={styles.headerTextBold}>0 casos.</Text>
+          Total de{' '}
+          <Text style={styles.headerTextBold}>{totalCount} casos.</Text>
         </Text>
       </View>
 
@@ -61,25 +93,30 @@ export default function Incident() {
       </Text>
 
       <FlatList
-        data={[1, 2, 3]}
+        data={incidents}
         style={styles.incidentsList}
-        keyExtractor={incident => String(incident)}
+        keyExtractor={incident => String(incident.id)}
         showsVerticalScrollIndicator={false}
-        renderItem={() => (
+        renderItem={(
+          { item: incident } // Renomeando propriedade descontruída para incidente
+        ) => (
           <View style={styles.incident}>
             <Text style={styles.incidentProperty}>ONG:</Text>
-            <Text style={styles.incidentProperty}>APAD</Text>
+            <Text>{incident.name}</Text>
 
             <Text style={styles.incidentProperty}>CASO:</Text>
-            <Text style={styles.incidentProperty}>Cadelinha atropelada</Text>
+            <Text>{incident.title}</Text>
 
             <Text style={styles.incidentProperty}>VALOR:</Text>
-            <Text style={styles.incidentProperty}>R$ 120,00</Text>
+            <Text>
+              {Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+              }).format(incident.value)}
+            </Text>
             <TouchableOpacity
               style={styles.detailsButton}
-              onPress={() => {
-                navigation.navigate('Details');
-              }}
+              onPress={() => toDetails(incident)}
             >
               <Text style={styles.detailsButtonText}>Ver mais detalhes</Text>
               <Feather name='arrow-right' size={23} color='#E02041'></Feather>

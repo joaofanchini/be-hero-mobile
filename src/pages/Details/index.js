@@ -2,7 +2,8 @@ import React from 'react';
 // Linking é utilizado para fazer deepLink no celular (chamar url de app)
 import { Text, View, Image, TouchableOpacity, Linking } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+//UseRoute pega informações da página passada
+import { useNavigation, useRoute, useTheme } from '@react-navigation/native';
 import * as MailComposer from 'expo-mail-composer';
 
 import styles from './style';
@@ -14,16 +15,24 @@ import logo from '../../../assets/logo.png'; // Já importa no melhor formato
 
 export default function Details() {
   const navigation = useNavigation();
-  const message =
-    'Olá {ongName}, estou entrando em contato paar ajudar no case {incident} com o valor de {value}';
+  const route = useRoute();
+  const incident = route.params.incident;
+  const message = `Olá ${
+    incident.name
+  }, estou entrando em contato para ajudar no caso "${
+    incident.title
+  }" com o valor de ${Intl.NumberFormat('pt-BR', {
+    currency: 'BRL',
+    style: 'currency'
+  }).format(incident.value)}`;
   function toBack() {
     navigation.goBack();
   }
 
   function sendEmail() {
     MailComposer.composeAsync({
-      subject: 'Herói do caso: Cadelinha atropelada',
-      recipients: ['ondeseraenviado@gmail.com'],
+      subject: `Herói do caso:${incident.title}`,
+      recipients: [incident.email],
       body: message
     });
   }
@@ -39,13 +48,21 @@ export default function Details() {
       </View>
       <View style={styles.incident}>
         <Text style={[styles.incidentProperty, { marginTop: 0 }]}>ONG:</Text>
-        <Text>APAD</Text>
+        <Text>
+          {incident.name} de {incident.uf}
+        </Text>
 
         <Text style={styles.incidentProperty}>CASO:</Text>
-        <Text>Cadelinha atropelada</Text>
+        <Text>{incident.title}</Text>
 
         <Text style={styles.incidentProperty}>VALOR:</Text>
-        <Text>R$ 120,00</Text>
+        <Text>
+          {' '}
+          {Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+          }).format(incident.value)}
+        </Text>
       </View>
       <View style={styles.contactBox}>
         <Text style={styles.heroTitle}>Salve o dia!</Text>
@@ -56,7 +73,7 @@ export default function Details() {
             style={styles.action}
             onPress={() => {
               Linking.openURL(
-                `whatsapp://send?phone=5511981008626&text=${message}`
+                `whatsapp://send?phone=${incident.whatsapp}&text=${message}`
               );
             }}
           >

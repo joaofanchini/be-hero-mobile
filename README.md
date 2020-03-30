@@ -39,6 +39,8 @@ PS: The concepts of components, state, immutabilty has the same too
   - npm install @react-navigation/stack (nagigations by the buttons)
 - expo install expo-constants
 - expo email-composer (abre tela para escrever email)
+- axios (http client)
+- intl (instalar pacote que apenas age quando o pacote nativo Intl não existir dentro do contexto trabalhado) - Biblioteca de internacionalização. Se importarmos a biblioteca no APP conseguimos fazer com que ela seja aplicada na aplicação inteira.
 
 PS: The expo already have the icons package, very similar of react-icons on the project.
 
