@@ -12,7 +12,7 @@ Start `expo start`
 ### About Expo / React Native
 
 - Don´t have semantic tags as the HTML
-  Common tag on the React Native World: <View> (like <div>)
+  Common tag on the React Native World: View (like div)
 
 - To style a View tag to need to pass the style attribute, indicanting the style function with StyleSheet object (StyleSheet.create() ). The style-sheet is demonstract by CSS.
 
