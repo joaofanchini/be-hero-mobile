@@ -2,6 +2,11 @@ Create project `expo init {project-name}`
 
 Start `expo start`
 
+### Complementary projects
+
+(Web app front-end)[https://github.com/joaofanchini/be-hero-frontend-web]
+(Back-end application)[https://github.com/joaofanchini/be-hero-backend]
+
 ### To emulate your app on your phone, just need:
 
 - Install the Expo app on your phone from the Google Play or Apple Store - Then you start the application and with the QR code, that appears on the screen, you scann the QR Code to run on you phone.
