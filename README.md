@@ -4,7 +4,8 @@ Start `expo start`
 
 ### Complementary projects
 
-(Web app front-end](https://github.com/joaofanchini/be-hero-frontend-web)
+[Web app front-end](https://github.com/joaofanchini/be-hero-frontend-web)
+
 [Back-end application](https://github.com/joaofanchini/be-hero-backend)
 
 ### To emulate your app on your phone, just need:
